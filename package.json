@@ -1,6 +1,6 @@
 {
   "name": "editable-slides",
-  "homepage": "https://rafull6.github.io/editable-slides",
+  "homepage": "https://rafull6.github.io/editable-slides/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,7 +19,10 @@
     "predeploy": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "eslint": "eslint --ext js,ts,tsx",
+    "lint": "npm run eslint src",
+    "lint:fix": "npm run eslint --fix src"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +42,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^4.0.0",
+    "prettier": "^2.7.1"
   }
 }
