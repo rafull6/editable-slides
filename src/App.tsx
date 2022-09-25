@@ -5,23 +5,13 @@ import { initialState } from './state';
 import { BlockType, ReducerActionType } from './types';
 import styles from './App.module.scss';
 import cn from 'classnames';
+import { Fab } from '@mui/material';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { exportToPdf } from './helpers';
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { title, blocks } = state;
-
-  // const updateField = ({
-  //   fieldName,
-  //   fieldValue,
-  // }: {
-  //   fieldName: string;
-  //   fieldValue: string;
-  // }) => {
-  //   dispatch({
-  //     type: ReducerActionType.UPDATE_BLOCK_FIELD,
-  //     payload: { fieldName, fieldValue },
-  //   });
-  // };
 
   const updateBlockFields = (block: BlockType) => {
     dispatch({
@@ -47,8 +37,12 @@ const App: React.FC = () => {
     });
   };
 
+  const handleExport = () => {
+    exportToPdf();
+  };
+
   return (
-    <div className={cn(styles.centerize, styles.container)}>
+    <div id="app" className={cn(styles.centerize, styles.container)}>
       <div className={cn(styles.centerize, styles.wrapper)}>
         <h1 className={styles.title}>{title}</h1>
         <div className={cn(styles.centerize, styles.blocksContainer)}>
@@ -62,6 +56,11 @@ const App: React.FC = () => {
               onUpdateBlockPosition={updateBlockPosition}
             />
           ))}
+        </div>
+        <div className={styles.pdfButton} onClick={handleExport}>
+          <Fab color="primary" aria-label="add">
+            <PictureAsPdfIcon />
+          </Fab>
         </div>
       </div>
     </div>
