@@ -1,8 +1,10 @@
-import { Button, Icon, TextField } from '@mui/material';
+import { Button, Icon, IconButton, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { BlockType } from '../../types';
 import { EditableTextField } from '../EditableTextField';
 import styles from './Block.module.scss';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 type Props = {
   id: string;
@@ -10,8 +12,9 @@ type Props = {
   title: string;
   icon: string;
   description: string;
-  updateBlock: (block: BlockType) => void;
-  toggleEdit: (id: string) => void;
+  onUpdateBlockFields: (block: BlockType) => void;
+  onToggleEdit: (id: string | null) => void;
+  onUpdateBlockPosition: (id: string | null, direction: boolean) => void;
 };
 
 export const Block: React.FC<Props> = ({
@@ -20,8 +23,9 @@ export const Block: React.FC<Props> = ({
   icon,
   description,
   selected,
-  updateBlock,
-  toggleEdit,
+  onUpdateBlockFields,
+  onToggleEdit,
+  onUpdateBlockPosition,
 }) => {
   const [localIcon, setLocalIcon] = useState<string>();
   const [localTitle, setLocalTitle] = useState<string>();
@@ -46,15 +50,12 @@ export const Block: React.FC<Props> = ({
       if (fieldName === 'description') {
         setLocalDesc(e.target.value);
       }
-
-      // console.log(fieldName, e.target.value);
-      // updateField({ fieldName, fieldValue: e.target.value });
     };
 
   const handleEdit = () => {
-    toggleEdit(id);
+    onToggleEdit(id);
     if (localIcon && localTitle && localDesc) {
-      updateBlock({
+      onUpdateBlockFields({
         id,
         icon: localIcon,
         title: localTitle,
@@ -63,12 +64,42 @@ export const Block: React.FC<Props> = ({
     }
   };
 
+  const handleCancel = () => {
+    onToggleEdit(null);
+    setLocalIcon(icon);
+    setLocalTitle(title);
+    setLocalDesc(description);
+  };
+
+  const moveRight = () => {
+    onUpdateBlockPosition(id, true);
+  };
+
+  const moveLeft = () => {
+    onUpdateBlockPosition(id, false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.editButton}>
+        {selected && (
+          <IconButton size="small" onClick={moveLeft}>
+            <KeyboardArrowLeftIcon fontSize="small" />
+          </IconButton>
+        )}
+        {selected && (
+          <Button size="small" onClick={handleCancel}>
+            Cancel
+          </Button>
+        )}
         <Button size="small" onClick={handleEdit}>
-          Edit
+          {selected ? 'Save' : 'Edit'}
         </Button>
+        {selected && (
+          <IconButton size="small" onClick={moveRight}>
+            <KeyboardArrowRightIcon fontSize="small" />
+          </IconButton>
+        )}
       </div>
 
       {icon && (

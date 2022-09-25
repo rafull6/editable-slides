@@ -23,17 +23,27 @@ const App: React.FC = () => {
   //   });
   // };
 
-  const updateBlock = (block: BlockType) => {
+  const updateBlockFields = (block: BlockType) => {
     dispatch({
       type: ReducerActionType.UPDATE_BLOCK,
       payload: block,
     });
   };
 
-  const toggleBlockEditMode = (id: string) => {
+  const toggleBlockEditMode = (id: string | null) => {
     dispatch({
       type: ReducerActionType.TOGGLE_EDIT_BLOCK,
       payload: id,
+    });
+  };
+
+  const updateBlockPosition = (id: string | null, direction: boolean) => {
+    dispatch({
+      type: ReducerActionType.CHANGE_BLOCK_POSITION,
+      payload: {
+        id,
+        direction,
+      },
     });
   };
 
@@ -42,16 +52,14 @@ const App: React.FC = () => {
       <div className={cn(styles.centerize, styles.wrapper)}>
         <h1 className={styles.title}>{title}</h1>
         <div className={cn(styles.centerize, styles.blocksContainer)}>
-          {blocks.map(({ icon, title, description, id }) => (
+          {blocks.map(block => (
             <Block
-              key={id}
-              id={id}
-              selected={id === state.selected}
-              icon={icon}
-              title={title}
-              description={description}
-              updateBlock={updateBlock}
-              toggleEdit={toggleBlockEditMode}
+              {...block}
+              key={block.id}
+              selected={block.id === state.selected}
+              onUpdateBlockFields={updateBlockFields}
+              onToggleEdit={toggleBlockEditMode}
+              onUpdateBlockPosition={updateBlockPosition}
             />
           ))}
         </div>

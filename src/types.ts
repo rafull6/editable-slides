@@ -1,6 +1,7 @@
 export enum ReducerActionType {
   UPDATE_BLOCK = 'UPDATE_BLOCK',
   TOGGLE_EDIT_BLOCK = 'TOGGLE_EDIT_BLOCK',
+  CHANGE_BLOCK_POSITION = 'CHANGE_BLOCK_POSITION',
 }
 
 export type BlockType = {

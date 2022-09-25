@@ -1,5 +1,16 @@
 import { Reducer } from 'react';
-import { ReducerAction, ReducerActionType, State } from './types';
+import { BlockType, ReducerAction, ReducerActionType, State } from './types';
+
+const moveToIndex = (
+  direction: boolean,
+  currentIndex: number,
+  lastIndex: number,
+) => {
+  if (direction) {
+    return currentIndex < lastIndex ? currentIndex + 1 : currentIndex;
+  }
+  return currentIndex >= 1 ? currentIndex - 1 : currentIndex;
+};
 
 export const reducer: Reducer<State, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -18,6 +29,22 @@ export const reducer: Reducer<State, ReducerAction> = (state, action) => {
           return block;
         }),
       };
+    case ReducerActionType.CHANGE_BLOCK_POSITION:
+      const blocks = [...state.blocks];
+      const lastAvailableIndex = state.blocks.length - 1;
+
+      const fromIndex = blocks.findIndex(block => block.id === state.selected);
+      const toIndex = moveToIndex(
+        action.payload.direction,
+        fromIndex,
+        lastAvailableIndex,
+      );
+      const elementToMove = blocks[fromIndex];
+
+      blocks.splice(fromIndex, 1);
+      blocks.splice(toIndex, 0, elementToMove);
+
+      return { ...state, blocks };
     default:
       return state;
   }
