@@ -1,0 +1,42 @@
+.container {
+    width: 250px;
+    height: 200px;
+    margin: 10px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &:hover {
+        .editButton {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+.iconSection {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+}
+
+.iconImage {
+    flex: 0 0 20%;
+}
+
+.iconField {
+    flex: 1 0 80%;
+}
+
+.editButton {
+    align-self: flex-end;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s ease;
+}

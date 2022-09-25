@@ -1,0 +1,24 @@
+.centerize {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    height: 100vh;
+    position: relative;
+}
+
+.wrapper {
+    flex-direction: column;
+    flex-basis: 100%;
+}
+
+.blocksContainer {
+    transition: transform .3s ease;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.title {
+    margin-bottom: 10px;
+}
