@@ -1,0 +1,1 @@
+export { BlockFooter } from './BlockFooter';

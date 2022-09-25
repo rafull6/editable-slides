@@ -1,0 +1,16 @@
+.iconSection {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+}
+
+.iconImage {
+    flex: 0 0 20%;
+}
+
+.iconField {
+    flex: 1 0 80%;
+}

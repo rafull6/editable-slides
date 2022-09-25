@@ -1,10 +1,9 @@
-import { Button, Icon, IconButton, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { BlockType } from '../../types';
 import { EditableTextField } from '../EditableTextField';
 import styles from './Block.module.scss';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { BlockFooter } from '../BlockFooter';
+import { EditableIcon } from '../EditableIcon';
 
 type Props = {
   id: string;
@@ -64,13 +63,6 @@ export const Block: React.FC<Props> = ({
     }
   };
 
-  const handleCancel = () => {
-    onToggleEdit(null);
-    setLocalIcon(icon);
-    setLocalTitle(title);
-    setLocalDesc(description);
-  };
-
   const moveRight = () => {
     onUpdateBlockPosition(id, true);
   };
@@ -81,48 +73,11 @@ export const Block: React.FC<Props> = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.editButton}>
-        {selected && (
-          <IconButton size="small" onClick={moveLeft}>
-            <KeyboardArrowLeftIcon fontSize="small" />
-          </IconButton>
-        )}
-        {selected && (
-          <Button size="small" onClick={handleCancel}>
-            Cancel
-          </Button>
-        )}
-        <Button size="small" onClick={handleEdit}>
-          {selected ? 'Save' : 'Edit'}
-        </Button>
-        {selected && (
-          <IconButton size="small" onClick={moveRight}>
-            <KeyboardArrowRightIcon fontSize="small" />
-          </IconButton>
-        )}
-      </div>
-
-      {icon && (
-        <div className={styles.iconSection}>
-          <div className={styles.iconImage}>
-            <Icon color="primary" fontSize="large">
-              {icon}
-            </Icon>
-          </div>
-          {selected && (
-            <div className={styles.iconField}>
-              <TextField
-                fullWidth
-                hiddenLabel
-                value={icon}
-                variant="filled"
-                size="small"
-                onChange={handleChange('icon')}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <EditableIcon
+        icon={icon}
+        edit={selected}
+        onChange={handleChange('icon')}
+      />
       <EditableTextField
         value={title}
         variant="h5"
@@ -134,6 +89,12 @@ export const Block: React.FC<Props> = ({
         variant="subtitle1"
         edit={selected}
         onChange={handleChange('description')}
+      />
+      <BlockFooter
+        isSelected={selected}
+        handleEdit={handleEdit}
+        moveRight={moveRight}
+        moveLeft={moveLeft}
       />
     </div>
   );
