@@ -8,6 +8,7 @@ import cn from 'classnames';
 import { Fab } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { exportToPdf } from './helpers';
+import { Hint } from './components/Hint';
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -62,6 +63,7 @@ const App: React.FC = () => {
             <PictureAsPdfIcon />
           </Fab>
         </div>
+        <Hint />
       </div>
     </div>
   );
